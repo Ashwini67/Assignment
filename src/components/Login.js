@@ -16,13 +16,13 @@ const Login = () => {
 
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
-    setErrorMessage(null); // Reset the error message
+    setErrorMessage(null); // RESET THE ERROR MESSAGE
 
-    // Optionally clear the form fields
+    // OPTIONALLY CLEAR THE FORM FIELDS
     emailRef.current.value = "";
     passwordRef.current.value = "";
     if (!isSignInForm) {
-      // These fields are only present in the sign-up form
+      // THESE FIELDS ARE ONLY PRESENT IN THE SIGN-UP FORM
       firstNameRef.current.value = "";
       lastNameRef.current.value = "";
       phoneNumberRef.current.value = "";
@@ -32,28 +32,28 @@ const Login = () => {
   const handleButtonClick = () => {
     let message;
     if (isSignInForm) {
-      // Handle sign-in validation
+      // HANLDE SING IN VALIDATION
       const emailValue = emailRef.current.value;
-      const passwordValue = sha256(passwordRef.current.value).toString(); // Hash the entered password to compare
+      const passwordValue = sha256(passwordRef.current.value).toString(); // *** HASH THE ENTERED PASSWORD TO COMPARE ***
 
-      // Retrieve user data from localStorage
+      // *** RESTRIRVE USER DATA FROM localStorage ***
       const userDataString = localStorage.getItem("user");
       const userData = userDataString && JSON.parse(userDataString);
 
-      // Check if email and hashed password match the stored values
+      // *** CHECK IF EMAIL AND HANSHED PASSWORD MATCH THE STORED VALUES ***
       if (
         userData &&
         userData.email === emailValue &&
         userData.password === passwordValue
       ) {
-        // Credentials are valid, redirect to the dashboard
+        // *** CREDENTIALS ARE VALID, REDIRECT TO THE DASHBOARD ***
         navigate("/dashboard");
       } else {
-        // Set an error message if credentials are invalid
+        // SET AN ERROR MESSAGE IF CREDENTIALS ARE INVALID
         message = "Invalid email or password";
       }
     } else {
-      // Handle sign-up validation and data storage
+      // *** HANDLE SING-UP VALIDATION AND DATA STORAGE ***
       message = checkValidData(
         {
           firstName: firstNameRef.current.value,
@@ -66,10 +66,10 @@ const Login = () => {
       );
 
       if (!message) {
-        // Hash the password
+        // *** HASH THE PASSWORD ***
         const hashedPassword = sha256(passwordRef.current.value).toString();
 
-        // Store user data in localStorage
+        // *** STORE USER DATA IN localStorage ***
         const userData = {
           firstName: firstNameRef.current.value,
           lastName: lastNameRef.current.value,
@@ -79,14 +79,14 @@ const Login = () => {
         };
         localStorage.setItem("user", JSON.stringify(userData));
 
-        // Clear the form fields after successful signup
+        // CLEAR THE FORM FEILDS AFTER SUCCESSFULL SINGUP
         firstNameRef.current.value = "";
         lastNameRef.current.value = "";
         phoneNumberRef.current.value = "";
         emailRef.current.value = "";
         passwordRef.current.value = "";
 
-        // Switch to the sign-in form and set a success message
+        // SWITCH TO THE SING-IN FORM AND SET A SUCCESS MESSAGE
         setIsSignInForm(true);
         message = "Signup successful. Please sign in.";
       }
@@ -155,6 +155,7 @@ const Login = () => {
             className="p-2 my-4 w-full bg-gray-700"
           />
 
+          {/* SIGN IN AND SIGN UP BUTTON */}
           <button
             className="p-2 my-6 bg-red-700 w-full rounded-lg"
             onClick={handleButtonClick}
@@ -167,10 +168,9 @@ const Login = () => {
               ? "New to Here? Sign Up Now"
               : "Already Registered? Sign In Now"}
           </p>
-
         </form>
       </div>
-      </>
+    </>
   );
 };
 
